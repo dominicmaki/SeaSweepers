@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Sea Sweepers.sln"
+    "dotnet.defaultSolution": "SeaSweepers.sln"
 }
