@@ -15,4 +15,15 @@ public class Tuna : MonoBehaviour
     {
         
     }
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {   
+        Debug.Log("Collided - Tuna");
+        if(other.CompareTag("Diver")){
+            Debug.Log("Inside compare tag - Tuna");
+            GoldCounter gold = other.GetComponent<GoldCounter>();
+            gold.Count(20);
+            Destroy(gameObject);
+        }
+    }
 }

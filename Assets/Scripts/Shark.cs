@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Shark : MonoBehaviour
 {
@@ -14,5 +15,14 @@ public class Shark : MonoBehaviour
     void Update()
     {
         
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {   
+        Debug.Log("Collided - Shark");
+        if(other.CompareTag("Diver")){
+            Debug.Log("Inside compare tag - Shark");
+            SceneManager.LoadScene("MainMenu");
+        }
     }
 }

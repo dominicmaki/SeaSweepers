@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,5 +15,16 @@ public class Trash : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {   
+        Debug.Log("Collided - Trash");
+        if(other.CompareTag("Diver")){
+            Debug.Log("Inside compare tag - Trash");
+            GoldCounter gold = other.GetComponent<GoldCounter>();
+            gold.Count(10);
+            Destroy(gameObject);
+        }
     }
 }
