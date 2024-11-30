@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2329750604378451358}
   - component: {fileID: -6406885842244114055}
   - component: {fileID: 5082691448481446629}
+  - component: {fileID: -6987116459441043756}
   m_Layer: 0
   m_Name: tuna
   m_TagString: Untagged
@@ -158,3 +159,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.3230114, y: 1.1167221}
   m_EdgeRadius: 0
+--- !u!114 &-6987116459441043756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663393052767008029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d043abf0d1ab8554c973fc641581d6be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
