@@ -7,6 +7,7 @@ public class Diver : MonoBehaviour
     Rigidbody2D rb;
     [Header("Movement")]
     [SerializeField] float speed = 10f;
+
     //[SerializeField] int gold = 0;
     // Start is called before the first frame update
     

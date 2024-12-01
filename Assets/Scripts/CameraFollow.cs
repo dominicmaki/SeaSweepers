@@ -4,16 +4,35 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField] Transform playerTransform;
-    // Start is called before the first frame update
+    [SerializeField] Transform playerTransform; // Reference to the player or object to follow
+
     void Start()
     {
-
+        // Optional: Ensure playerTransform is assigned if not already in Inspector
+        if (playerTransform == null)
+        {
+            GameObject player = GameObject.FindWithTag("Player"); // Assuming the player is tagged as "Player"
+            if (player != null)
+            {
+                playerTransform = player.transform;
+            }
+            else
+            {
+                Debug.LogError("Player not found. Make sure the player is tagged correctly.");
+            }
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    void LateUpdate() // Use LateUpdate to follow after all movement updates
     {
-        transform.position = new Vector3(playerTransform.position.x, playerTransform.position.y, -10);
+        if (playerTransform != null)
+        {
+            // Update camera position
+            transform.position = new Vector3(playerTransform.position.x, playerTransform.position.y, -10);
+        }
+        else
+        {
+            Debug.LogError("Player transform not assigned!");
+        }
     }
 }

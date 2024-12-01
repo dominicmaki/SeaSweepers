@@ -1,29 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Tuna : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void OnTriggerEnter2D(Collider2D other)
-    {   
-        Debug.Log("Collided - Tuna");
-        if(other.CompareTag("Diver")){
-            Debug.Log("Inside compare tag - Tuna");
-            GoldCounter gold = other.GetComponent<GoldCounter>();
-            gold.Count(20);
-            Destroy(gameObject);
+    {
+        if (other.CompareTag("Diver"))
+        {
+            Debug.Log("Diver collided with Tuna");
+
+            // Add gold to the GoldManager
+            if (GoldManager.Instance != null)
+            {
+                GoldManager.Instance.AddGold(20);  // Add gold when colliding
+                Debug.Log("Added 20 gold");
+                Destroy(gameObject);  // Destroy the tuna object
+            }
+            else
+            {
+                Debug.LogError("GoldManager not found.");
+            }
         }
     }
 }

@@ -1,30 +1,25 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Trash : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void OnTriggerEnter2D(Collider2D other)
-    {   
-        Debug.Log("Collided - Trash");
-        if(other.CompareTag("Diver")){
-            Debug.Log("Inside compare tag - Trash");
-            GoldCounter gold = other.GetComponent<GoldCounter>();
-            gold.Count(10);
-            Destroy(gameObject);
+    {
+        if (other.CompareTag("Diver"))
+        {
+            Debug.Log("Diver collided with Trash");
+
+            // Add gold to the GoldManager
+            if (GoldManager.Instance != null)
+            {
+                GoldManager.Instance.AddGold(10);  // Add gold when colliding
+                Debug.Log("Added 10 gold");
+                Destroy(gameObject);  // Destroy the tuna object
+            }
+            else
+            {
+                Debug.LogError("GoldManager not found.");
+            }
         }
     }
 }

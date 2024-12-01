@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInputHandler : MonoBehaviour
@@ -7,69 +5,52 @@ public class PlayerInputHandler : MonoBehaviour
     public float moveAmount = 1.0f;
     private Vector3 targetPosition; // Target position sprite will move to
     [SerializeField] private Diver diver; // Reference to Diver script
-    [SerializeField] private GoldCounter goldCounter; // Reference to GoldCounter script
     [SerializeField] private OxygenManager oxygenManager; // Reference to OxygenManager script
-    private int totalGold = 150; // Example starting gold amount
 
-    // Start is called before the first frame update
     void Start()
     {
         targetPosition = transform.position;
 
-        // Ensure the GoldCounter and OxygenManager are assigned
-        if (goldCounter == null)
-        {
-            goldCounter = GetComponent<GoldCounter>();
-            if (goldCounter == null)
-            {
-                Debug.LogError("GoldCounter not assigned or found on this GameObject.");
-            }
-        }
-
+        // Ensure the OxygenManager is assigned
         if (oxygenManager == null)
         {
             Debug.LogError("OxygenManager not assigned in the Inspector.");
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         MoveDiverWithMouse();
         Vector3 movement = Vector3.zero;
 
         // Handle movement inputs
-        if (Input.GetKey(KeyCode.A))
-        {
-            movement += new Vector3(-1, 0, 0);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            movement += new Vector3(1, 0, 0);
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
-            movement += new Vector3(0, 1, 0);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            movement += new Vector3(0, -1, 0);
-        }
+        if (Input.GetKey(KeyCode.A)) movement += new Vector3(-1, 0, 0);
+        if (Input.GetKey(KeyCode.D)) movement += new Vector3(1, 0, 0);
+        if (Input.GetKey(KeyCode.W)) movement += new Vector3(0, 1, 0);
+        if (Input.GetKey(KeyCode.S)) movement += new Vector3(0, -1, 0);
 
-        // Handle upgrade logic
-        if (Input.GetKey(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            if (goldCounter != null && oxygenManager != null)
+            // Attempt to upgrade by deducting gold
+            if (GoldManager.Instance != null && oxygenManager != null)
             {
-                goldCounter.Upgrade(totalGold, oxygenManager);
+                if (GoldManager.Instance.DeductGold(100)) // Check if there's enough gold
+                {
+                    oxygenManager.RefillOxygen(30); // Refill oxygen by 30
+                    Debug.Log("Upgrade purchased! Remaining Gold: " + GoldManager.Instance.totalGold);
+                }
+                else
+                {
+                    Debug.Log("Not enough gold to upgrade!");
+                }
             }
             else
             {
-                Debug.LogWarning("Cannot upgrade: GoldCounter or OxygenManager is missing.");
+                Debug.LogWarning("GoldManager or OxygenManager is missing.");
             }
         }
 
-        // Call Diver's Move method
+        // Move the Diver (if necessary)
         if (diver != null)
         {
             diver.Move(movement);
@@ -80,7 +61,6 @@ public class PlayerInputHandler : MonoBehaviour
         }
     }
 
-     // Function to make the Diver move smoothly towards the mouse position
     private void MoveDiverWithMouse()
     {
         // Get the mouse position in screen space

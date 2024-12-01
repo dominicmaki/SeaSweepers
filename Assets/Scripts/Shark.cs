@@ -19,9 +19,8 @@ public class Shark : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {   
-        Debug.Log("Collided - Shark");
         if(other.CompareTag("Diver")){
-            Debug.Log("Inside compare tag - Shark");
+            Destroy(gameObject); 
             SceneManager.LoadScene("MainMenu");
         }
     }

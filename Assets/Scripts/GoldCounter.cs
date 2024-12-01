@@ -1,45 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class GoldCounter : MonoBehaviour
 {
+    public static GoldCounter Instance; // Singleton instance
     public TMP_Text DisplayText; // Reference to the TextMeshPro component
-    private int totalGold = 0;   // Tracks the total gold
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    // Called when the script is first loaded or instantiated
+    void Awake()
     {
-        
-    }
-
-    public void Upgrade(int totalGold, OxygenManager oxygenManager)
-    {
-        if (totalGold >= 100)
+        if (Instance == null)
         {
-            totalGold -= 100; // Deduct the cost of the upgrade
-            oxygenManager.RefillOxygen(30); // Refill oxygen by 30
+            Instance = this; // Set the singleton instance
+            DontDestroyOnLoad(gameObject); // Keep it persistent across scenes (optional)
         }
         else
         {
-            Debug.Log("Not enough gold to upgrade!"); // Optional feedback
+            Destroy(gameObject); // Ensure only one instance exists
         }
-    }   
+    }
 
-
-    public void Count(int goldValue)
+    // Method to update the UI with the total gold
+    public void Display(int totalGold)
     {
-        totalGold += goldValue; // Increment total gold
         if (DisplayText != null)
         {
-            DisplayText.text = "Gold: " + totalGold.ToString();
+            DisplayText.text = $"Gold: {totalGold}";
+        }
+        else
+        {
+            Debug.LogError("DisplayText is not assigned!");
         }
     }
 }
